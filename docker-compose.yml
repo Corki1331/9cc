@@ -1,0 +1,12 @@
+version: '3'
+services:
+  9cc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /work/9cc/
+    volumes:
+      - ~/.ssh:/root/.ssh
+      - ~/.gitconfig:/root/.gitconfig
+      - ./:/work/9cc
+    command: sleep infinity
