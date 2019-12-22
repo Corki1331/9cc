@@ -1,8 +1,13 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or the definition README at
 // https://github.com/microsoft/vscode-dev-containers/tree/master/containers/alpine-3.10-git
 {
-	"name": "Alpine 3.10",
-	"dockerFile": "Dockerfile",
+	"name": "9cc",
+	"dockerComposeFile": "../docker-compose.yml",
+
+  "service": "9cc",
+  "workspaceFolder": "/work/9cc",
+  "shutdownAction": "stopCompose",
+  
 	
 	"runArgs": [
 		// Uncomment the line if you will use a ptrace-based debugger like Go.
@@ -18,7 +23,7 @@
 	// You can edit these settings after create using File > Preferences > Settings > Remote.
 	"settings": {
 		// This dev container does include /bin/bash if you prefer to use it instead of ash.
-		"terminal.integrated.shell.linux": "/bin/ash"
+		"terminal.integrated.shell.linux": "/bin/bash"
 	},
 
 	// Uncomment the next line if you want to publish any ports.
