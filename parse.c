@@ -33,7 +33,7 @@ Token *tokenize(){
     }
 
     if (*p == '+' || *p == '-' || *p == '*' || *p == '/' || *p == '(' ||
-        *p == ')' || *p == '=' || *p == '<' || *p == '>'){
+        *p == ')' || *p == '=' || *p == '<' || *p == '>' || *p == ';'){
       cur = new_token(TK_RESERVED, cur, p++, 1);
       continue;
     }
@@ -43,6 +43,11 @@ Token *tokenize(){
       char *tmp_len = p;
       cur->val = strtol(p, &p, 10);
       cur->len = p - tmp_len;
+      continue;
+    }
+
+    if ('a' <= *p && *p <= 'z'){
+      cur = new_token(TK_IDENT, cur, p++, 1);
       continue;
     }
 

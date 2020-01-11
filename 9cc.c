@@ -8,6 +8,7 @@
 
 char *user_input;
 Token *token;
+Node *code[100];
 
 int main(int argc, char **argv) {
     if (argc != 2){
@@ -17,7 +18,7 @@ int main(int argc, char **argv) {
     
   user_input = argv[1];
   token = tokenize(user_input);
-  Node *node = expr();
+  Node *node = program();
 
   printf(".intel_syntax noprefix\n");
   printf(".global main\n");

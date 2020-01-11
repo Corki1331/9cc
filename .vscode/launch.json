@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "/work/9cc/9cc",
-            "args": ["0 <= 1"],
+            "args": ["0"],
             "stopAtEntry": true,
             "cwd": "/work/9cc/",
             "environment": [],

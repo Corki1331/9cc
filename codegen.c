@@ -52,8 +52,47 @@ int expect_number() {
   return val;
 }
 
+bool expect_char(){
+  if (token->kind != TK_IDENT){
+    return false;
+  }
+  return true;
+}
+
+bool at_eof() {
+  if(token->kind != TK_EOF){
+    error_at(token->str, "expect eof");
+  }
+  return true;
+}
+
+Node *program() {
+  /*
+  int i = 0;
+  while (!at_eof()){
+    code[i++] = stmt();
+  }
+  code[i] = NULL;
+  */
+  return stmt();
+}
+
+Node *stmt() {
+  Node *node = expr();
+  //expect(";");
+  return node;
+}
+
 Node *expr(){
-  return equality();
+  return assign();
+}
+
+Node *assign() {
+  Node *node = equality();
+  if (consume("=")){
+    node = new_node(ND_ASSIGN, node, assign());
+  }
+  return node;
 }
 
 Node *equality(){
@@ -128,6 +167,14 @@ Node *primary() {
   if (consume("(")){
     Node *node = expr();
     expect(")");
+    return node;
+  }
+
+  bool is_char = expect_char();
+  if (is_char) {
+    Node *node = calloc(1, sizeof(Node));
+    node->kind = ND_LVAR;
+    node->offset - (token->str[0] - 'a' + 1) * 8;
     return node;
   }
 
