@@ -58,7 +58,8 @@ struct LVar {
 extern char *user_input;
 extern Token *token;
 extern Node *code[100];
-//extern LVar *locals;
+extern LVar lvar_head;
+extern LVar *cur_lvar;
 
 void error_at(char *loc, char *fmt, ...);
 bool consume(char *op);

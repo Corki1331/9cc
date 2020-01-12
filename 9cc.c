@@ -9,6 +9,8 @@
 char *user_input;
 Token *token;
 Node *code[100];
+LVar lvar_head = {NULL, NULL, 0, 0};
+LVar *cur_lvar = &lvar_head;
 
 int main(int argc, char **argv) {
     if (argc != 2){

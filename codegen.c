@@ -38,7 +38,7 @@ bool consume(char *op) {
 
 void expect(char *op){
   if (token->kind != TK_RESERVED || token->str[0] != *op){
-    error_at(token->str, "expected '%c'", op);
+    error_at(token->str, "expected '%c'", *op);
   }
   token = token->next;
 }
@@ -64,6 +64,14 @@ bool at_eof() {
     return false;
   }
   return true;
+}
+
+LVar *find_lvar(char *target_name) {
+  for (LVar *var = lvar_head.next; var; var = var->next){
+    if (!memcmp(target_name, var->name, var->len))
+      return var;
+  }
+  return NULL;
 }
 
 Node *program() {
@@ -172,8 +180,22 @@ Node *primary() {
   if (is_char) {
     Node *node = calloc(1, sizeof(Node));
     node->kind = ND_LVAR;
-    node->offset = (token->str[0] - 'a' + 1) * 8;
-    token = token->next;
+
+    LVar *lvar = find_lvar(token->str);
+    if (lvar) {
+      node->offset = lvar->offset;
+      token = token->next;
+    }else {
+      lvar = calloc(1, sizeof(LVar));
+      lvar->next = NULL;
+      cur_lvar->next = lvar;
+      lvar->name = token->str;
+      lvar->len = token->len;
+      lvar->offset = cur_lvar->offset + 8;
+      node->offset = lvar->offset;
+      cur_lvar = lvar;
+      token = token->next;
+    }
     return node;
   }
 
