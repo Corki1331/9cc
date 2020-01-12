@@ -46,11 +46,14 @@ Token *tokenize(){
       continue;
     }
 
-    if ('a' <= *p && *p <= 'z'){
-      cur = new_token(TK_IDENT, cur, p++, 1);
-      continue;
+    int var_len = 0;
+    char *char_head = p;
+    while('a' <= *p && *p <= 'z'){
+        p++;
+        var_len += 1;
     }
-
+    cur = new_token(TK_IDENT, cur, char_head, var_len);
+    continue;
     error_at(p, "expected a number");
   }
   new_token(TK_EOF, cur, p, 0);

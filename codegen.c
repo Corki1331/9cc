@@ -61,25 +61,23 @@ bool expect_char(){
 
 bool at_eof() {
   if(token->kind != TK_EOF){
-    error_at(token->str, "expect eof");
+    return false;
   }
   return true;
 }
 
 Node *program() {
-  /*
   int i = 0;
   while (!at_eof()){
     code[i++] = stmt();
   }
   code[i] = NULL;
-  */
-  return stmt();
+  //return stmt();
 }
 
 Node *stmt() {
   Node *node = expr();
-  //expect(";");
+  expect(";");
   return node;
 }
 
