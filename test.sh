@@ -17,6 +17,8 @@ try() {
     fi
 }
 
+try 32 'return 32;'
+try 112 'a = 1*3; b=a+1;return 112;c=9/9+1;'
 try 0 '0;'
 try 42 '42;'
 try 21 "5+20-4;"
@@ -48,6 +50,6 @@ try 0 '1>=2;'
 try 7 'a = 5+2;'
 try 10 'a = (3+2)*4/2;'
 try 12 'a=5+2;b=2+3;c=1+4;a+b;'
-try 60 'a=5+2;b=2+3;c=1+4;dog = a+b;1;22;33;dog*b;'
+try 60 'a=5+2;b=2+3;c=1+4;dog = a+b;1;22;33;e = 1+1;dog*b;'
 
 echo OK

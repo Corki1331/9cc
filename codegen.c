@@ -80,11 +80,18 @@ Node *program() {
     code[i++] = stmt();
   }
   code[i] = NULL;
-  //return stmt();
 }
 
 Node *stmt() {
-  Node *node = expr();
+  Node *node;
+  if (token->kind == TK_RETURN) {
+    token = token->next;
+    node = calloc(1, sizeof(Node));
+    node->kind = ND_RETURN;
+    node->lhs = expr();
+  } else {
+    node = expr();
+  }
   expect(";");
   return node;
 }
@@ -229,6 +236,13 @@ void gen(Node *node) {
     printf("  pop rax\n");
     printf("  mov [rax], rdi\n");
     printf("  push rdi\n");
+    return;
+  case ND_RETURN:
+    gen(node->lhs);
+    printf("  pop rax\n");
+    printf("  mov rsp, rbp\n");
+    printf("  pop rbp\n");
+    printf("  ret\n");
     return;
   }
 
