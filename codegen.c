@@ -1,5 +1,5 @@
 #include "9cc.h"
-
+int tmpnum = 0;
 Node *new_node(NodeKind kind, Node *lhs, Node *rhs) {
   Node *node = calloc(1, sizeof(Node));
   node->kind = kind;
@@ -89,6 +89,14 @@ Node *stmt() {
     node = calloc(1, sizeof(Node));
     node->kind = ND_RETURN;
     node->lhs = expr();
+  } else if (token->kind == TK_IF){
+    token = token->next;
+    node = calloc(1, sizeof(Node));
+    node->kind = ND_IF;
+    node->lhs = expr();
+    expect(";");
+    node->rhs = stmt();
+    return node;
   } else {
     node = expr();
   }
@@ -218,6 +226,7 @@ void gen_lval(Node *node) {
 }
 
 void gen(Node *node) {
+  static int label_name = 2;
   switch (node->kind)
   {
   case ND_NUM:
@@ -243,6 +252,15 @@ void gen(Node *node) {
     printf("  mov rsp, rbp\n");
     printf("  pop rbp\n");
     printf("  ret\n");
+    return;
+  case ND_IF:
+    gen(node->lhs);
+    printf("  pop rax\n");
+    printf("  cmp rax, 0\n");
+    printf("  je .L%d\n", label_name);
+    gen(node->rhs);
+    printf(".L%d:\n", label_name);
+    label_name +=1;
     return;
   }
 

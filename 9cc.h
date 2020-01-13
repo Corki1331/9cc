@@ -8,6 +8,7 @@
 typedef enum {
   TK_RESERVED,
   TK_RETURN,
+  TK_IF,
   TK_IDENT,
   TK_NUM,
   TK_EOF,
@@ -37,6 +38,7 @@ typedef enum {
   ND_GTN, // >
   ND_GEQ, // >=
   ND_RETURN,
+  ND_IF,
 } NodeKind;
 
 typedef struct Node Node;
@@ -84,3 +86,5 @@ Node *mul();
 Node *unary();
 Node *primary();
 void gen(Node *node);
+
+extern int tmpnum;

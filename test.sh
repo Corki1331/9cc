@@ -16,7 +16,8 @@ try() {
       exit 1
     fi
 }
-
+try 60 'a=5+2;b=2+3;if a==7;dog=a+b;ifa==7;e=1+1;dog*b;'
+try 1 'a=1;if a==1;a;'
 try 32 'return 32;'
 try 112 'a = 1*3; b=a+1;return 112;c=9/9+1;'
 try 0 '0;'
