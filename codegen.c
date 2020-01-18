@@ -97,9 +97,18 @@ Node *stmt() {
     node->lhs = expr();
     expect(")");
     expect("{");
-    node->rhs = stmt();
+    node->rhs = new_node(ND_IF_BRANCH, NULL, NULL);
+    node->rhs->lhs = stmt();
     expect("}");
-    return node;
+    if (token->kind == TK_ELSE){
+      token = token->next;
+      expect("{");
+      node->rhs->rhs = stmt();
+      expect("}");
+      return node;
+    }else {
+      return node;
+    }
   } else {
     node = expr();
   }
@@ -261,8 +270,11 @@ void gen(Node *node) {
     printf("  pop rax\n");
     printf("  cmp rax, 0\n");
     printf("  je .L%d\n", label_name);
-    gen(node->rhs);
+    gen(node->rhs->lhs);
     printf(".L%d:\n", label_name);
+    if (node->rhs->rhs != NULL){
+      gen(node->rhs->rhs);
+    }
     label_name +=1;
     return;
   }

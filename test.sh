@@ -59,5 +59,15 @@ try 220 '
      } 
      c = 6;
      return  b * a;'
+try 10 '
+     a = 10;
+     b = 15;
+     if(a > b){
+       b = b + 7;
+     } else {
+       b = 1;
+     }
+     c = 6;
+     return  b * a;'
 
 echo OK

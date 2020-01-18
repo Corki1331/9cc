@@ -34,8 +34,6 @@ int main(int argc, char **argv) {
     gen(code[i]);
     printf("  pop rax\n");
   }
-  //gen(node);
-  //printf("  pop rax\n");
 
   printf("  mov rsp, rbp\n");
   printf("  pop rbp\n");
