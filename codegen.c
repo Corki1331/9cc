@@ -91,11 +91,14 @@ Node *stmt() {
     node->lhs = expr();
   } else if (token->kind == TK_IF){
     token = token->next;
+    expect("(");
     node = calloc(1, sizeof(Node));
     node->kind = ND_IF;
     node->lhs = expr();
-    expect(";");
+    expect(")");
+    expect("{");
     node->rhs = stmt();
+    expect("}");
     return node;
   } else {
     node = expr();

@@ -16,8 +16,6 @@ try() {
       exit 1
     fi
 }
-try 60 'a=5+2;b=2+3;if a==7;dog=a+b;ifa==7;e=1+1;dog*b;'
-try 1 'a=1;if a==1;a;'
 try 32 'return 32;'
 try 112 'a = 1*3; b=a+1;return 112;c=9/9+1;'
 try 0 '0;'
@@ -52,5 +50,14 @@ try 7 'a = 5+2;'
 try 10 'a = (3+2)*4/2;'
 try 12 'a=5+2;b=2+3;c=1+4;a+b;'
 try 60 'a=5+2;b=2+3;c=1+4;dog = a+b;1;22;33;e = 1+1;dog*b;'
+try 60 'a=5+2;b=2+3;if (a==7){dog=a+b;}if(a==7){e=1+1;}dog*b;'
+try 220 '
+     a = 10;
+     b = 15;
+     if(a < b){
+       b = b + 7;
+     } 
+     c = 6;
+     return  b * a;'
 
 echo OK
