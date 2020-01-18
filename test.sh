@@ -69,5 +69,7 @@ try 10 '
      }
      c = 6;
      return  b * a;'
+try 45 'i = 1;while(i < 45){i = i+1;}return i;'
+try 0 'i = 10;while(i){i = i-1;}return i;'
 
 echo OK

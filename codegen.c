@@ -109,6 +109,17 @@ Node *stmt() {
     }else {
       return node;
     }
+  }else if(token->kind == TK_WHILE){
+    token = token->next;
+    node = calloc(1, sizeof(Node));
+    node->kind = ND_WHILE;
+    expect("(");
+    node->lhs = expr();
+    expect(")");
+    expect("{");
+    node->rhs = stmt();
+    expect("}");
+    return node;
   } else {
     node = expr();
   }
@@ -275,6 +286,17 @@ void gen(Node *node) {
     if (node->rhs->rhs != NULL){
       gen(node->rhs->rhs);
     }
+    label_name +=1;
+    return;
+  case ND_WHILE:
+    printf("  jmp .L%d\n", label_name);
+    printf(".L%d:\n", label_name+1);
+    gen(node->rhs);
+    printf(".L%d:\n", label_name);
+    gen(node->lhs);
+    printf("  pop rax\n");
+    printf("  cmp rax, 0\n");
+    printf("  jne .L%d\n", label_name+1);
     label_name +=1;
     return;
   }
